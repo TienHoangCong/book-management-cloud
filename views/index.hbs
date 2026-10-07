@@ -1,0 +1,66 @@
+<h2 class="mb-4 text-center">Hệ Thống Quản Lý Sách (Cloud Computing)</h2>
+
+<div class="alert alert-info">
+  Số lượt ghé thăm (Stateless Session MongoDB Atlas): <strong>{{views}}</strong>
+</div>
+
+{{#if error}}
+  <div class="alert alert-danger">{{error}}</div>
+{{/if}}
+
+{{#if success}}
+  <div class="alert alert-success">{{success}}</div>
+{{/if}}
+
+<div class="card mb-4">
+  <div class="card-header bg-primary text-white">Thêm Sách Mới</div>
+  <div class="card-body">
+    <form action="/add-book" method="POST">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Mã sách (Bắt đầu bằng 272):</label>
+          <input type="text" name="code" class="form-control" placeholder="272001" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Tên sách:</label>
+          <input type="text" name="title" class="form-control" placeholder="Lập trình Cloud" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Giá gốc (VNĐ):</label>
+          <input type="number" name="basePrice" class="form-control" placeholder="100000" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success mt-3">Thêm Sách</button>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header bg-secondary text-white">Danh Sách Sách Hiện Có</div>
+  <div class="card-body">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Mã Sách</th>
+          <th>Tên Sách</th>
+          <th>Giá Gốc</th>
+          <th>Mức VAT</th>
+          <th>Giá Sau Thuế</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each books}}
+          <tr>
+            <td>{{this.code}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.basePrice}} VNĐ</td>
+            <td>{{this.vatRate}}%</td>
+            <td><strong>{{this.finalPrice}} VNĐ</strong></td>
+          </tr>
+        {{else}}
+          <tr><td colspan="5" class="text-center">Chưa có dữ liệu sách.</td></tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
